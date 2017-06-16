@@ -1,6 +1,6 @@
 {
   "name": "react-disqus-comments",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Disqus thread component",
   "main": "build/main.js",
   "scripts": {
