@@ -28,6 +28,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
+    "prop-types": "^15.5.0",
     "rackt-cli": "^0.5.3",
     "react": "^15.0.1",
     "react-dom": "^15.0.1"
