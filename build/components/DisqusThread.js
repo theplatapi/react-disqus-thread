@@ -26,21 +26,26 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var DISQUS_CONFIG = ['shortname', 'identifier', 'title', 'url', 'category_id', 'onNewComment'];
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var DISQUS_CONFIG = ['shortname', 'identifier', 'title', 'url', 'category_id', 'onNewComment', 'language'];
 var __disqusAdded = false;
 
 function copyProps(context, props) {
-    var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    var onNewComment = props.onNewComment,
+        language = props.language,
+        rest = _objectWithoutProperties(props, ['onNewComment', 'language']);
 
-    Object.keys(props).forEach(function (prop) {
-        context[prefix + prop] = props[prop];
-    });
+    for (var prop in rest) {
+        context.page[prop] = rest[prop];
+    }
 
-    if (typeof props.onNewComment === 'function') {
-        context[prefix + 'config'] = function config() {
-            this.callbacks.onNewComment = [function handleNewComment(comment) {
-                props.onNewComment(comment);
-            }];
+    // Setting the language - if none is provided, the default one is used
+    context.language = language;
+
+    if (onNewComment) {
+        context.callbacks = {
+            onNewComment: [onNewComment]
         };
     }
 }
@@ -112,22 +117,18 @@ var DisqusThread = function (_React$Component) {
 
             // Extract Disqus props that were supplied to this component
             DISQUS_CONFIG.forEach(function (prop) {
-                if (!!_this3.props[prop]) {
+                // prop "shortname" is only necessary for loading the script, not for the config itself
+                if (prop !== 'shortname' && !!_this3.props[prop]) {
                     props[prop] = _this3.props[prop];
                 }
             });
-
-            // Always set URL
-            if (!props.url || !props.url.length) {
-                props.url = window.location.href;
-            }
 
             // If Disqus has already been added, reset it
             if (typeof DISQUS !== 'undefined') {
                 DISQUS.reset({
                     reload: true,
                     config: function config() {
-                        copyProps(this.page, props);
+                        copyProps(this, props);
 
                         // Disqus needs hashbang URL, see https://help.disqus.com/customer/portal/articles/472107
                         this.page.url = this.page.url.replace(/#/, '') + '#!newthread';
@@ -135,7 +136,9 @@ var DisqusThread = function (_React$Component) {
                 });
             } else {
                 // Otherwise add Disqus to the page
-                copyProps(window, props, 'disqus_');
+                window.disqus_config = function () {
+                    copyProps(this, props);
+                };
                 this.addDisqusScript();
             }
         }
@@ -182,7 +185,7 @@ DisqusThread.propTypes = {
      * is undefined. In addition, this URL is always saved when a thread is
      * being created so that Disqus knows what page a thread belongs to.
      */
-    url: _propTypes2.default.string,
+    url: _propTypes2.default.string.isRequired,
 
     /**
      * `category_id` tells the Disqus service the category to be used for
@@ -196,7 +199,18 @@ DisqusThread.propTypes = {
      * JavaScript object with comment `id` and `text`. This allows you to track
      * user comments and replies and run a script after a comment is posted.
      */
-    onNewComment: _propTypes2.default.func
+    onNewComment: _propTypes2.default.func,
+
+    /**
+     * `language` tells the Disqus service which language should be used.
+     * Please refer to https://www.transifex.com/disqus/disqus/ on which languages can be used
+     * If undefined, English is used as default one
+     */
+    language: _propTypes2.default.string
+};
+
+DisqusThread.defaultProps = {
+    url: window.location.href
 };
 
 exports.default = DisqusThread;
