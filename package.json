@@ -1,12 +1,13 @@
 {
   "name": "react-disqus-comments",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "React Disqus thread component",
   "main": "build/main.js",
   "scripts": {
     "test": "rackt test --single-run --browsers Firefox",
     "start": "rackt server",
-    "build": "rm -rf build && babel -d build --ignore DisqusThread-test.js lib"
+    "build": "rm -rf build && babel -d build --ignore DisqusThread-test.js lib",
+    "publish": "npm publish"
   },
   "repository": {
     "type": "git",
