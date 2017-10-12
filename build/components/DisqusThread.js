@@ -185,7 +185,7 @@ DisqusThread.propTypes = {
      * is undefined. In addition, this URL is always saved when a thread is
      * being created so that Disqus knows what page a thread belongs to.
      */
-    url: _propTypes2.default.string.isRequired,
+    url: _propTypes2.default.string,
 
     /**
      * `category_id` tells the Disqus service the category to be used for
@@ -210,7 +210,7 @@ DisqusThread.propTypes = {
 };
 
 DisqusThread.defaultProps = {
-    url: window.location.href
+    url: typeof window === 'undefined' ? null : window.location.href
 };
 
 exports.default = DisqusThread;
