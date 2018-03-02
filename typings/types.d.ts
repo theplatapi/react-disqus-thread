@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-type OnCommentCallback = ({id: string, text: string}) => any;
+type OnCommentCallback = (comment: { id: string, text: string }) => any;
 
 /**
- * Interface for `ReactDisqusComponent` props.
+ * Interface for `DisqusThread` props.
  *
- * @interface    ReactDisqusProps
+ * @interface    DisqusThreadProps
  * @since        1.0.3
  */
 export declare interface DisqusThreadProps {
@@ -18,7 +18,7 @@ export declare interface DisqusThreadProps {
      *
      * @property    {string}    shortname
      */
-    shortname: string;
+    shortname?: string;
 
     /**
      * `identifier` tells the Disqus service how to identify the
@@ -29,10 +29,9 @@ export declare interface DisqusThreadProps {
      * domains, so we recommend using your own unique way of
      * identifying a thread.
      *
-     *
      * @property    {string}    identifier
      */
-    identifier: string;
+    identifier?: string;
 
     /**
      * `title` tells the Disqus service the title of the current page.
@@ -42,7 +41,7 @@ export declare interface DisqusThreadProps {
      *
      * @property    {string}    title
      */
-    title: string;
+    title?: string;
 
     /**
      * `url` tells the Disqus service the URL of the current page.
@@ -53,7 +52,7 @@ export declare interface DisqusThreadProps {
      *
      * @property    {string}    url
      */
-    url: string;
+    url?: string;
 
     /**
      * `category_id` tells the Disqus service the category to be used for
@@ -62,7 +61,7 @@ export declare interface DisqusThreadProps {
      *
      * @property    {string}    category_id
      */
-    category_id: string;
+    category_id?: string;
 
     /**
      * `onNewComment` function accepts one parameter `comment` which is a
@@ -73,7 +72,7 @@ export declare interface DisqusThreadProps {
      *
      * @property    {function}    onNewComment
      */
-    onNewComment: OnCommentCallback;
+    onNewComment?: OnCommentCallback;
 
     /**
      * `language` tells the Disqus service which language should be used.
@@ -82,7 +81,7 @@ export declare interface DisqusThreadProps {
      *
      * @property    {string}    language
      */
-    language: string;
+    language?: string;
 }
 
 export declare class DisqusThread extends React.Component<DisqusThreadProps, {}> {
