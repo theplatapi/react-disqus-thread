@@ -9,7 +9,7 @@ type OnCommentCallback = (comment: { id: string, text: string }) => any;
  * @since        1.0.3
  */
 export declare interface DisqusThreadProps {
-    id: string;
+    id?: string;
 
     /**
      * `shortname` tells the Disqus service your forum's shortname,
@@ -18,7 +18,7 @@ export declare interface DisqusThreadProps {
      *
      * @property    {string}    shortname
      */
-    shortname?: string;
+    shortname: string;
 
     /**
      * `identifier` tells the Disqus service how to identify the
@@ -86,3 +86,4 @@ export declare interface DisqusThreadProps {
 
 export declare class DisqusThread extends React.Component<DisqusThreadProps, {}> {
 }
+export default DisqusThread;
